@@ -1,0 +1,15 @@
+html, body, map {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+h1 {
+  padding: 0;
+  margin: 0;
+}
+
+
+#mapid { 
+    height: 100%; 
+}
