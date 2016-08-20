@@ -6,5 +6,6 @@ var getEvents =  function () {
     // console.log(data);
     return data;
   });
+
 };
 // });
