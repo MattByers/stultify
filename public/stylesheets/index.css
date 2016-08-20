@@ -4,13 +4,33 @@ html, body {
   margin: 0;
 }
 
+.carousel {
+  height: 30%;
+}
+
+.btn-primary {
+  background-color: #33FFA6;
+  background-image: none;
+  border-width: 0;
+  text-shadow: none;
+  border: none;
+
+  margin-left: auto;
+  margin-right: 20px;
+  margin: 10px;
+}
+
 h1 {
   font-family: 'paytone-one', sans-serif;
+  color: #E91E52;
+  margin: 10px;
+  margin-top: 50px;
 }
 
 p {
   font-family: 'Montserrat', sans-serif;
   font-weight: bold;
+  margin: 10px;
 }
 
 a {
