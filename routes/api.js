@@ -36,9 +36,9 @@ router.get('/events', function(req, res, next) {
   function aggregateResults(facebook, eventfinda) {
     //Aggregate the two json results.
 
-    console.log(prettyjson.render(facebook));
-    console.log("\n\n=================================");
-    console.log(prettyjson.render(eventfinda));
+    // console.log(prettyjson.render(facebook));
+    // console.log("\n\n=================================");
+    // console.log(prettyjson.render(eventfinda));
 
 
     var events = [];

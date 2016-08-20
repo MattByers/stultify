@@ -2,8 +2,24 @@ var express = require('express');
 var router = express.Router();
 var unirest = require('unirest');
 var distance = require('gps-distance');
+var moment = require('moment');
 var exports = module.exports = {};
-var urlStart = "http://api.eventfinda.co.nz/v2/events.json?fields=event:(url,name,description,point,category)";
+
+var startDate = function(){
+  millis = Date.now();
+  millis = moment(millis);
+  toReturn = millis.format("YYYY-MM-DD HH:mm:ss");
+  return toReturn;
+};
+
+var endDate = function(){
+  millis = Date.now() + 24 * 3600 * 1000 * 1;
+  millis = moment(millis);
+  toReturn = millis.format("YYYY-MM-DD HH:mm:ss");
+  return toReturn;
+};
+
+var urlStart = "http://api.eventfinda.co.nz/v2/events.json?fields=event:(url,name,description,datetime_start,datetime_end,point,category)&start_date="+startDate()+"&end_date="+endDate();
 
 var getEvents = function(callback){
   unirest.get(urlStart)
@@ -15,11 +31,13 @@ var getEvents = function(callback){
       callback(null, new Error('Error finding results'));
     }
     else{
-      console.log(result.body.events);
+      console.log(urlStart);
       callback(result.body.events);
     }
    });
 };
+
+
 
 
 
