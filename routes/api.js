@@ -45,7 +45,8 @@ router.get('/events', function(req, res, next) {
 
     for(i = 0; i < facebook.length; i++){
       var fbItem = facebook[i];
-      events.push({"name": fbItem.name,
+      events.push({"source": "facebook",
+        "name": fbItem.name,
         "description": fbItem.description,
         "lat": fbItem.venue.location.latitude,
         "long": fbItem.venue.location.longitude,
