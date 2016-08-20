@@ -46,6 +46,7 @@ router.get('/events', function(req, res, next) {
         "description": fbItem.description,
         "lat": fbItem.venue.location.latitude,
         "long": fbItem.venue.location.longitude,
+        "date": moment(fbItem.startTime,'YYYY-MM-DD').format()
       });
     }
     for(i = 0; i < eventfinda.length; i++){
@@ -53,7 +54,8 @@ router.get('/events', function(req, res, next) {
       events.push({"name": efItem.name,
         "description": efItem.description,
         "lat": efItem.point.lat,
-        "long": efItem.point.lng
+        "long": efItem.point.lng,
+        "date": moment(efItem.datetime_start,'YYYY-MM-DD').format()
       });
     }
 
