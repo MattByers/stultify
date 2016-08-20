@@ -18,10 +18,11 @@ html, body {
   margin-left: auto;
   margin-right: 20px;
   margin: 10px;
+  size: 18px;
 }
 
 h1 {
-  font-family: 'paytone-one', sans-serif;
+  font-family: paytone-one, sans-serif;
   color: #E91E52;
   margin: 10px;
   margin-top: 50px;
@@ -30,6 +31,7 @@ h1 {
 p {
   font-family: 'Montserrat', sans-serif;
   font-weight: bold;
+  font-size: 18px;
   margin: 10px;
 }
 
