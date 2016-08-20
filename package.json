@@ -13,6 +13,7 @@
     "facebook-events-by-location": "^0.5.3",
     "facebook-events-by-location-core": "^0.1.4",
     "fb": "^1.1.1",
+    "gps-distance": "0.0.4",
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0",
     "unirest": "^0.5.1"
