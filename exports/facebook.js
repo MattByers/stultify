@@ -13,19 +13,20 @@ var exports = module.exports = {};
 
 
 
-exports.eventsByLatLong = function(lat, long, callback) {
+exports.eventsByLatLong = function(lat, long, radius, callback) {
 
   console.log("inside the facebook events function");
 
   var es = new EventSearch({
     "accessToken": APP_TOKEN,
     "lat": lat,
-    "lng":long
+    "lng":long,
+    "distance": radius
 
   });
 
-  es.search().then(function (events) {
-    callback(events, null);
+  es.search().then(function (searchResult) {
+    callback(searchResult.events, null);
   }).catch(function (error) {
     callback(null, error);
   });

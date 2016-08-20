@@ -4,6 +4,9 @@ const radius = 300;
 var express = require('express');
 var router = express.Router();
 
+var prettyjson = require('prettyjson');
+var moment = require('moment');
+
 var facebook = require('../exports/facebook');
 var eventfinda = require('../exports/eventfinda');
 
@@ -11,7 +14,7 @@ var eventfinda = require('../exports/eventfinda');
 router.get('/events', function(req, res, next) {
 
   //Call Facebook api
-  facebook.eventsByLatLong(wellington.lat, wellington.long, function(fbData, fbError){
+  facebook.eventsByLatLong(wellington.lat, wellington.long, radius, function(fbData, fbError){
 
     if(fbError)  return res.status(400).send("Invalid Request: " + fbError);
 
@@ -30,7 +33,31 @@ router.get('/events', function(req, res, next) {
   function aggregateResults(facebook, eventfinda) {
     //Aggregate the two json results.
 
-    res.status(200).send(eventfinda);
+    console.log(prettyjson.render(facebook));
+    console.log("\n\n=================================");
+    console.log(prettyjson.render(eventfinda));
+
+
+    var events = [];
+
+    for(i = 0; i < facebook.length; i++){
+      var fbItem = facebook[i];
+      events.push({"name": fbItem.name,
+        "description": fbItem.description,
+        "lat": fbItem.venue.location.latitude,
+        "long": fbItem.venue.location.longitude,
+      });
+    }
+    for(i = 0; i < eventfinda.length; i++){
+      var efItem = eventfinda[i];
+      events.push({"name": efItem.name,
+        "description": efItem.description,
+        "lat": efItem.point.lat,
+        "long": efItem.point.lng
+      });
+    }
+
+    res.status(200).send(events);
   }
 
 });
