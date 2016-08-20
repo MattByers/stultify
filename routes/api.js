@@ -46,7 +46,9 @@ router.get('/events', function(req, res, next) {
         "description": fbItem.description,
         "lat": fbItem.venue.location.latitude,
         "long": fbItem.venue.location.longitude,
-        "date": moment(fbItem.startTime,'YYYY-MM-DD').format()
+        "date": moment(fbItem.startTime,'YYYY-MM-DD').format(),
+        "url": fbItem.url,
+        "category": null
       });
     }
     for(i = 0; i < eventfinda.length; i++){
@@ -55,7 +57,9 @@ router.get('/events', function(req, res, next) {
         "description": efItem.description,
         "lat": efItem.point.lat,
         "long": efItem.point.lng,
-        "date": moment(efItem.datetime_start,'YYYY-MM-DD').format()
+        "date": moment(efItem.datetime_start,'YYYY-MM-DD').format(),
+        "url": efItem.url,
+        "category": efItem.category.parent_id
       });
     }
 
