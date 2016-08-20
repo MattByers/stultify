@@ -1,7 +1,10 @@
-$(document).ready(function() {
-  console.log("api request");
-  var url = "api/events";
+// $(document).ready(function() {
+var url = "api/events";
+
+var getEvents =  function () {
   $.get(url, function(data, status){
-        console.log("data", data);
-    });
-});
+    // console.log(data);
+    return data;
+  });
+};
+// });
