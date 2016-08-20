@@ -1,26 +1,71 @@
 const wellington = { "lat": -41.292716, "long": 174.773076};
+const radius = 300;
 
 var express = require('express');
 var router = express.Router();
 
+var prettyjson = require('prettyjson');
+var moment = require('moment');
+
 var facebook = require('../exports/facebook');
+var eventfinda = require('../exports/eventfinda');
 
 /* GET home page. */
 router.get('/events', function(req, res, next) {
 
-  var toReturn;
-
   //Call Facebook api
-  facebook.eventsByLatLong(wellington.lat, wellington.long, function(result){
-    toReturn = result;
-    console.log(result);
+  facebook.eventsByLatLong(wellington.lat, wellington.long, radius, function(fbData, fbError){
+
+    if(fbError)  return res.status(400).send("Invalid Request: " + fbError);
+
+
+    //call the eventfinda api
+
+    eventfinda.getEventsAroundPoint(wellington.lat, wellington.long, radius, function(efData, efError){
+
+      //If not error
+      if(efError) return res.status(400).send("Invalid Request: " + efError);
+
+
+      aggregateResults(fbData, efData);
+
+    });
   });
 
-  //call the eventfinda api
 
-  //Aggregate the two json results.
+  function aggregateResults(facebook, eventfinda) {
+    //Aggregate the two json results.
 
-  res.status(200).json(toReturn);
+    console.log(prettyjson.render(facebook));
+    console.log("\n\n=================================");
+    console.log(prettyjson.render(eventfinda));
+
+
+    var events = [];
+
+    for(i = 0; i < facebook.length; i++){
+      var fbItem = facebook[i];
+      events.push({"source": "facebook",
+        "name": fbItem.name,
+        "description": fbItem.description,
+        "lat": fbItem.venue.location.latitude,
+        "long": fbItem.venue.location.longitude,
+        "date": moment(fbItem.startTime,'YYYY-MM-DD').format()
+      });
+    }
+    for(i = 0; i < eventfinda.length; i++){
+      var efItem = eventfinda[i];
+      events.push({"name": efItem.name,
+        "description": efItem.description,
+        "lat": efItem.point.lat,
+        "long": efItem.point.lng,
+        "date": moment(efItem.datetime_start,'YYYY-MM-DD').format()
+      });
+    }
+
+    res.status(200).send(events);
+  }
+
 });
 
 module.exports = router;
