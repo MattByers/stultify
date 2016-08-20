@@ -15,7 +15,6 @@ var exports = module.exports = {};
 
 exports.eventsByLatLong = function(lat, long, radius, callback) {
 
-  console.log("inside the facebook events function");
 
   var es = new EventSearch({
     "accessToken": APP_TOKEN,
