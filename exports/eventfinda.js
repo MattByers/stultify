@@ -10,19 +10,28 @@ var getEvents = function(callback){
   .header("X-Mashape-Key", "Lv4F833PBpmshgpogHNJQN98NwKap12ojv9jsn6t5pzZypLeKh")
   .header("Accept", "application/json")
   .end(function (result) {
-    callback(result.body.events);
+    if(!result){
+      callback(null, new Error('Error finding results'));
+    }
+    else{
+      callback(result.body.events);
+    }
    });
 };
 
 exports.getEventsAroundPoint = function(lat, lon, rad, callback) {
   toReturn = [];
-  getEvents(function(events){
-    for(i = 0; i < events.length; i++){
-      if(distance(lat, lon, events[i].point.lat, events[i].point.lng) < rad){
-        toReturn.push(events[i]);
+  getEvents(function(events, error){
+    if(error){
+      callback(null, error);
+    } else {
+      for(i = 0; i < events.length; i++){
+        if(distance(lat, lon, events[i].point.lat, events[i].point.lng) < rad){
+          toReturn.push(events[i]);
+        }
       }
+      callback(toReturn);
     }
-    callback(toReturn);
   });
 };
 
