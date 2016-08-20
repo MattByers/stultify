@@ -11,7 +11,12 @@ FB.options({accessToken: APP_TOKEN});
 
 var exports = module.exports = {};
 
-
+exports.eventByID = function(id, callback) {
+  FB.api('/' + id, 'GET', {}, function(response) {
+    if(!response) callback(null, new Error ("Event not found"));
+    else callback(response, null);
+  });
+};
 
 exports.eventsByLatLong = function(lat, long, radius, callback) {
 

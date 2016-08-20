@@ -10,18 +10,32 @@ var moment = require('moment');
 var facebook = require('../exports/facebook');
 var eventfinda = require('../exports/eventfinda');
 
+router.get('/event/:source/:id', function(req, res) {
+  var source = req.params.source;
+  var id = req.params.id;
+
+  if(source == 'facebook') {
+    //query facebook here
+  } else if(source == 'eventfinda'){
+    //query eventfinda here
+  }
+});
+
 /* GET home page. */
-router.get('/events', function(req, res, next) {
+router.get('/events/:lat/:long', function(req, res, next) {
+
+  var lat = parseFloat(req.params.lat);
+  var long = parseFloat(req.params.long);
 
   //Call Facebook api
-  facebook.eventsByLatLong(wellington.lat, wellington.long, radius, function(fbData, fbError){
+  facebook.eventsByLatLong(lat, long, radius, function(fbData, fbError){
 
     if(fbError)  return res.status(400).send("Invalid Request: " + fbError);
 
 
     //call the eventfinda api
 
-    eventfinda.getEventsAroundPoint(wellington.lat, wellington.long, radius, function(efData, efError){
+    eventfinda.getEventsAroundPoint(lat, long, radius, function(efData, efError){
 
       //If not error
       if(efError) return res.status(400).send("Invalid Request: " + efError);
@@ -55,7 +69,8 @@ router.get('/events', function(req, res, next) {
     }
     for(i = 0; i < eventfinda.length; i++){
       var efItem = eventfinda[i];
-      events.push({"name": efItem.name,
+      events.push({"source": "eventfinda",
+        "name": efItem.name,
         "description": efItem.description,
         "lat": efItem.point.lat,
         "long": efItem.point.lng,
