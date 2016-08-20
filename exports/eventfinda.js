@@ -3,7 +3,7 @@ var router = express.Router();
 var unirest = require('unirest');
 var distance = require('gps-distance');
 var exports = module.exports = {};
-var urlStart = "https://eventfinda-eventfinda-nz.p.mashape.com/events.json";
+var urlStart = "http://api.eventfinda.co.nz/v2/events.json?fields=event:(url,name,description,point,category)";
 
 var getEvents = function(callback){
   unirest.get(urlStart)
@@ -20,6 +20,8 @@ var getEvents = function(callback){
     }
    });
 };
+
+
 
 var getEventsByKeyWords = function(keywords, callback){
   var url = urlStart + "?autocomplete=" + keywords;
@@ -38,7 +40,7 @@ var getEventsByKeyWords = function(keywords, callback){
 };
 
 exports.eventByID = function(id, callback){
-  var url = urlStart + "?id=" + id;
+  var url = urlStart + "id=" + id;
   unirest.get(url)
   .header("Authorization", "Basic bG9jYWxob3N0Mjp0cWNrbmpja2doYnY=")
   .header("X-Mashape-Key", "Lv4F833PBpmshgpogHNJQN98NwKap12ojv9jsn6t5pzZypLeKh")
