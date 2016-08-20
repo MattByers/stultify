@@ -18,11 +18,14 @@ router.get('/events', function(req, res, next) {
 
     if(fbError)  return res.status(400).send("Invalid Request: " + fbError);
 
+
     //call the eventfinda api
 
-    eventfinda.getEventsAroundPoint(wellington.lat, wellington.long, radius, function(efData){
+    eventfinda.getEventsAroundPoint(wellington.lat, wellington.long, radius, function(efData, efError){
 
       //If not error
+      if(efError) return res.status(400).send("Invalid Request: " + efError);
+
 
       aggregateResults(fbData, efData);
 
