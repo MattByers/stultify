@@ -25,9 +25,9 @@ exports.eventsByLatLong = function(lat, long, callback) {
   });
 
   es.search().then(function (events) {
-    callback(events);
+    callback(events, null);
   }).catch(function (error) {
-    throw "No data found at Lat, long";
+    callback(null, error);
   });
 
 };
