@@ -1,5 +1,5 @@
 const wellington = { "lat": -41.292716, "long": 174.773076};
-const radius = 300;
+const radius = 2500;
 
 var express = require('express');
 var router = express.Router();
@@ -16,8 +16,17 @@ router.get('/event/:source/:id', function(req, res) {
 
   if(source == 'facebook') {
     //query facebook here
+    facebook.eventByID(id, function(event, error){
+      if(error) return res.status(400).send("Invalid request: " + error);
+      res.status(200).send(event);
+    });
+
   } else if(source == 'eventfinda'){
     //query eventfinda here
+    eventfinda.eventByID(id, function(event, error){
+      if(error) return res.status(400).send("Invalid request: " + error);
+      res.status(200).send(event);
+    });
   }
 });
 
@@ -60,6 +69,7 @@ router.get('/events/:lat/:long', function(req, res, next) {
     for(i = 0; i < facebook.length; i++){
       var fbItem = facebook[i];
       events.push({"source": "facebook",
+        "id": fbItem.id,
         "name": fbItem.name,
         "description": fbItem.description,
         "lat": fbItem.venue.location.latitude,
@@ -72,6 +82,7 @@ router.get('/events/:lat/:long', function(req, res, next) {
     for(i = 0; i < eventfinda.length; i++){
       var efItem = eventfinda[i];
       events.push({"source": "eventfinda",
+        "id": efItem.id,
         "name": efItem.name,
         "description": efItem.description,
         "lat": efItem.point.lat,
