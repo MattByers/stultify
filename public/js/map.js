@@ -30,12 +30,10 @@ map.on('moveend', function(e) {
 });
 
 function getData(lat, long) {
-  console.log("before calling the api");
   var url = "api/events/"+ lat +'/'+ long;
 
   // making api get request
   $.get(url, function(data, status){
-    console.log("got data");
     placeOnMap(data);
   });
 
@@ -44,27 +42,18 @@ function getData(lat, long) {
   }
 
   function addToMap(eventDetail) {
-
   // Marker Icon
   var fbIcon = L.icon({
     iconUrl: '/images/fb_icon.png',
 
-    iconSize:     [38, 38], // size of the icon
-    shadowSize:   [50, 64], // size of the shadow
-    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-    shadowAnchor: [4, 62],  // the same for the shadow
-    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    iconSize: [38, 38], // size of the icon
 });
 
   // ef_icon.png
   var efIcon = L.icon({
     iconUrl: '/images/ef_icon.png',
 
-    iconSize:     [38, 38], // size of the icon
-    shadowSize:   [50, 64], // size of the shadow
-    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-    shadowAnchor: [4, 62],  // the same for the shadow
-    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    iconSize: [38, 38], // size of the icon
 });
 
 
@@ -83,9 +72,9 @@ function getData(lat, long) {
   ).addTo(map);
 
   // Test popup
-  marker.bindPopup('<p><b>' + eventDetail.name + '</b><br />' + eventDetail.description + '</p>');
-}
-}
-
-console.log("after calling the api");
+  marker.bindPopup('<h2>' + eventDetail.name +
+                  '</h2><br /><h6>' + eventDetail.description + '</h6>' +
+                  '<br /><a class="btn btn-default" href='+eventDetail.url+'>link url</a>');
+    }
+  }
 });
