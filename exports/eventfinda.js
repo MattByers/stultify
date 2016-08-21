@@ -21,8 +21,8 @@ var endDate = function(){
 
 var urlStart = "http://api.eventfinda.co.nz/v2/events.json?fields=event:(url,name,description,datetime_start,datetime_end,point,category)&start_date="+startDate()+"&end_date="+endDate();
 
-var getEvents = function(callback){
-  unirest.get(urlStart)
+var getEvents = function(url, callback){
+  unirest.get(url)
   .header("Authorization", "Basic bG9jYWxob3N0Mjp0cWNrbmpja2doYnY=")
   .header("X-Mashape-Key", "Lv4F833PBpmshgpogHNJQN98NwKap12ojv9jsn6t5pzZypLeKh")
   .header("Accept", "application/json")
@@ -73,9 +73,25 @@ exports.eventByID = function(id, callback){
    });
 };
 
+exports.getFreeEvents = function(lat, lon, rad, callback){
+  toReturn = [];
+  getEvents(urlStart+"&free=1", function(events, error){
+    if(error){
+      callback(null, error);
+    } else {
+      for(i = 0; i < events.length; i++){
+        if(distance(lat, lon, events[i].point.lat, events[i].point.lng) < rad){
+          toReturn.push(events[i]);
+        }
+      }
+      callback(toReturn);
+    }
+  });
+};
+
 exports.getEventsAroundPoint = function(lat, lon, rad, callback) {
   toReturn = [];
-  getEvents(function(events, error){
+  getEvents(urlStart, function(events, error){
     if(error){
       callback(null, error);
     } else {

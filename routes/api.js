@@ -98,4 +98,77 @@ router.get('/events/:lat/:long', function(req, res, next) {
 
 });
 
+
+/* GET home page. */
+router.get('/freeevents/:lat/:long', function(req, res, next) {
+
+  var lat = parseFloat(req.params.lat);
+  var long = parseFloat(req.params.long);
+
+  //Call Facebook api
+  facebook.eventsByLatLong(lat, long, radius, function(fbData, fbError){
+
+    if(fbError)  return res.status(400).send("Invalid Request: " + fbError);
+
+
+    //call the eventfinda api
+
+    eventfinda.getFreeEvents(lat, long, radius, function(efData, efError){
+
+      //If not error
+      if(efError) return res.status(400).send("Invalid Request: " + efError);
+
+
+      aggregateResults(fbData, efData);
+
+    });
+  });
+
+
+  function aggregateResults(facebook, eventfinda) {
+    //Aggregate the two json results.
+
+    // console.log(prettyjson.render(facebook));
+    // console.log("\n\n=================================");
+    // console.log(prettyjson.render(eventfinda));
+
+
+    var events = [];
+
+    for(i = 0; i < facebook.length; i++){
+      var fbItem = facebook[i];
+      events.push({"source": "facebook",
+        "id": fbItem.id,
+        "name": fbItem.name,
+        "description": fbItem.description,
+        "lat": fbItem.venue.location.latitude,
+        "long": fbItem.venue.location.longitude,
+        "date": fbItem.startTime,
+        "url": "http://www.facebook.com/events/" + fbItem.id,
+        "category": null
+      });
+    }
+    for(i = 0; i < eventfinda.length; i++){
+      var efItem = eventfinda[i];
+      events.push({"source": "eventfinda",
+        "id": efItem.id,
+        "name": efItem.name,
+        "description": efItem.description,
+        "lat": efItem.point.lat,
+        "long": efItem.point.lng,
+        "date": efItem.datetime_start,
+        "url": efItem.url,
+        "category": efItem.category.parent_id
+      });
+    }
+
+    res.status(200).send(events);
+  }
+
+});
+
+
+
+
+
 module.exports = router;
