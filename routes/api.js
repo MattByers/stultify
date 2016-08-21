@@ -75,7 +75,7 @@ router.get('/events/:lat/:long', function(req, res, next) {
         "lat": fbItem.venue.location.latitude,
         "long": fbItem.venue.location.longitude,
         "date": fbItem.startTime,
-        "url": fbItem.url,
+        "url": "http://www.facebook.com/events/" + fbItem.id,
         "category": null
       });
     }
