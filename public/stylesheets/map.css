@@ -12,7 +12,7 @@ body {
   position: absolute;
   left: 0;
   top: 0;
-  height: 5%;
+  /*height: 5%;*/
   width: 100%;
   background-color: #E91E52;
   z-index: 400;
@@ -20,7 +20,7 @@ body {
 
 h1 {
   width: 100%;
-  padding: 0;
+  padding: 7px;
   margin: 0;
   font-family: paytone-one, sans-serif;
   color: #ffffff;
@@ -38,17 +38,6 @@ h1 {
     box-sizing: border-box;
 }
 
-.refine-panel {
-  transition: top 0.9s ease;
-  position: absolute;
-  left: 0;
-  top: 95%;
-  width: 100%;
-  height: 50%;
-  z-index: 100;
-  background-color: #33FFA6;
-}
-
 p {
   font-family: 'Montserrat', sans-serif;
   font-weight: bold;
@@ -58,7 +47,50 @@ p {
   text-align: center;
 }
 
+.refine-panel {
+  transition: top 0.9s ease;
+  position: absolute;
+  left: 0;
+  top: 95%;
+  width: 100%;
+  height: 70%;
+  z-index: 100;
+  background-color: #33FFA6;
+}
+
+
+
 .refine-open {
   transition: top 0.9s ease;
-  top: 50%;
+  top: 40%;
+}
+
+.filter {
+  width: 100%;
+  height: 25%;
+  z-index: 200;
+}
+
+.date-filt {
+  background-color: blue;
+}
+
+.dist-filt {
+  background-color: yellow;
+}
+
+.tick-filt {
+  background-color: red;
+  /*display: table-cell;
+  vertical-align: middle;*/
+}
+
+.btn-group {
+  width: 100%;
+  /*margin: 0 auto;
+  display: block;*/
+}
+
+img {
+  width: 30px;
 }
