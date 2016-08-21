@@ -33,11 +33,12 @@ exports.freeEvents = function(lat, long, radius, callback){
     var freeEvents = [];
 
     for(i = 0; i < searchResult.length; i ++) {
+      console.log(searchResult[i].ticket_uri);
       if(!searchResult[i].ticket_uri) {
         freeEvents.push(searchResult[i]);
       }
     }
-
+    console.log(freeEvents);
     callback(freeEvents, null);
   }).catch(function (error) {
     callback(null, error);
