@@ -38,7 +38,7 @@ h1 {
     box-sizing: border-box;
 }
 
-p {
+h2 {
   font-family: 'Montserrat', sans-serif;
   font-weight: bold;
   font-size: 18px;
@@ -53,22 +53,20 @@ p {
   left: 0;
   top: 95%;
   width: 100%;
-  height: 70%;
+  height: 20%;
   z-index: 100;
   background-color: #33FFA6;
 }
 
-
-
 .refine-open {
   transition: top 0.9s ease;
-  top: 40%;
+  top: 90%;
 }
 
 .filter {
-  width: 100%;
+  /*width: 100%;
   height: 25%;
-  z-index: 200;
+  z-index: 200;*/
 }
 
 .date-filt {
@@ -76,11 +74,9 @@ p {
 }
 
 .dist-filt {
-  background-color: yellow;
 }
 
 .tick-filt {
-  background-color: red;
   /*display: table-cell;
   vertical-align: middle;*/
 }
@@ -91,6 +87,32 @@ p {
   display: block;*/
 }
 
+.date {
+    width: 20%;
+}
+
+
+.thing {
+
+}
+
 img {
   width: 30px;
+
+}
+
+p {
+  color: white;
+  /*font-family: ;*/
+}
+
+.btn {
+  background-color: #8D37F5;
+  color: white;
+}
+
+.clicked {
+  background-color: white;
+  padding: 7px;
+  border-color: #8D37F5;
 }
