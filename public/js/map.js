@@ -2,6 +2,7 @@ $(document).ready(function() {
 
   var lat = -41.286;
   var long = 174.77;
+  var uri = "api/events/";
 
   // Initialize Map
   var map = L.map('mapid', // Map Options
@@ -20,17 +21,19 @@ $(document).ready(function() {
     accessToken: 'pk.eyJ1IjoianVzdGFiaXRkb3BlIiwiYSI6ImNpczJkcjZ5MTAwaGQydHAxNmN2ZHh1NWUifQ.CwwXo2NNcUduhDqbN8tmNA' // Peter's Token
   }).addTo(map);
 
-getData(lat, long);
+getData(uri, lat, long);
 
 //get user postion
 map.on('moveend', function(e) {
   var lat = map.getCenter().lat;
   var long = map.getCenter().lng;
-  getData(lat, long);
+  getData(uri, lat, long);
 });
 
-function getData(lat, long) {
-  var url = "api/events/"+ lat +'/'+ long;
+function getData(uri, lat, long) {
+  var url = uri + lat +'/'+ long;
+
+  console.log(url);
 
   // making api get request
   $.get(url, function(data, status){
@@ -74,7 +77,17 @@ function getData(lat, long) {
   // Test popup
   marker.bindPopup('<h2>' + eventDetail.name +
                   '</h2><br /><h6>' + eventDetail.description + '</h6>' +
-                  '<br /><a class="btn btn-default" href='+eventDetail.url+'>link url</a>');
+                  '<br /><a class="btn btn-default" href='+eventDetail.url+' target="_blank">link url</a>');
     }
+  }
+
+  // Click handler for the free click event
+  $('#freeButton').on(getFreeEvent);
+
+  function getFreeEvent() {
+    var uri = "api/freeevents/"+ lat +'/'+ long;
+    // getData(uri, lat, long);
+    console.log("get free events");
+
   }
 });
