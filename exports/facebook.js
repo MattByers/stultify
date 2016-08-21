@@ -18,6 +18,32 @@ exports.eventByID = function(id, callback) {
   });
 };
 
+exports.freeEvents = function(lat, long, radius, callback){
+  var es = new EventSearch({
+    "accessToken": APP_TOKEN,
+    "lat": lat,
+    "lng":long,
+    "distance": radius,
+    "since": Math.floor(Date.now()/1000),
+    "until": Math.floor(Date.now()/1000 + 24*3600)
+
+  });
+
+  es.search().then(function (searchResult) {
+    var freeEvents = [];
+
+    for(i = 0; i < searchResult.length; i ++) {
+      if(!searchResult[i].ticket_uri) {
+        freeEvents.push(searchResult[i]);
+      }
+    }
+
+    callback(freeEvents, null);
+  }).catch(function (error) {
+    callback(null, error);
+  });
+};
+
 exports.eventsByLatLong = function(lat, long, radius, callback) {
 
 
